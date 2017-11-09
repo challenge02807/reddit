@@ -1,0 +1,11 @@
+Subreddit AskReddit has vocabulary of 556635 words
+Subreddit funny has vocabulary of 221424 words
+Subreddit pics has vocabulary of 206683 words
+Subreddit worldnews has vocabulary of 193694 words
+Subreddit todayilearned has vocabulary of 189606 words
+Subreddit subredditreports has vocabulary of 188477 words
+Subreddit videos has vocabulary of 187362 words
+Subreddit pcmasterrace has vocabulary of 153071 words
+Subreddit AdviceAnimals has vocabulary of 138567 words
+Subreddit nfl has vocabulary of 136720 words
+Query took 579.24 seconds
