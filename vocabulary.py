@@ -16,20 +16,24 @@ def getWords(comment):
     return words
 
 def searcher(id,subreddits,num_reds):
-    max_reds = [("",-1)]*10
     con = sqlite3.connect('reddit.db')
     c = con.cursor()
-    for i,red in enumerate(subreddits):
+    lengths = []
+    for red in subreddits:
         vocab = set()
         for row in c.execute('SELECT body FROM comments INNER JOIN subreddits ON comments.subreddit_id = subreddits.id WHERE subreddits.id = "'+red+'"'):
             vocab.update(getWords(row[0]))
-        vocab_len = len(vocab)
-        for i,m in enumerate(max_reds):
-            if vocab_len > m[1]:
-                max_reds[i] = (red,vocab_len)
-                break
+        lengths.append(len(vocab))
 
-    print("Process %i done!" % id)
+    max_reds = []
+    for i in range(10):
+        max_index = np.argmax(lengths)
+        max_len = lengths[max_index]
+        red = subreddits[max_index]
+        max_reds.append((red,max_len))
+        lengths[max_index] = -1
+
+    #print("Process %i done!" % id)
     return max_reds
 
 t0 = time.time()
@@ -52,10 +56,8 @@ parts = []
 for i in range(cores):
     if i != cores-1:
         parts.append(subreddits[num_reds*i:num_reds*(i+1)])
-        #print("Process %i --> [%i:%i]" % (i,num_reds * i, num_reds * (i + 1)))
     else:
         parts.append(subreddits[num_reds * i:])
-        #print("Process %i --> [%i:%s]" % (i,num_reds * i, ""))
 
 args = []
 for i in range(cores):
@@ -65,6 +67,7 @@ for i in range(cores):
     inner.append(num_reds)
     args.append(inner)
 
+#print("Starting %i processes \t Time used: %.2f" % (cores,time.time() - t0))
 with Pool(processes=cores) as pool:
     results = pool.starmap(searcher, args)
     lengths = []
@@ -78,8 +81,8 @@ with Pool(processes=cores) as pool:
         max_index = np.argmax(lengths)
         max_len = lengths[max_index]
         lengths[max_index] = -1
-        red = subreddits_dict[reds[max_index]]
-        print("Subreddit %s has vocabulary of %i words" % (red,max_len))
+        red_i = reds[max_index]
+        red_str = subreddits_dict[red_i]
+        print("Subreddit %s (%s) has vocabulary of %i words" % (red_str,red_i,max_len))
 
-t1 = time.time()
-print("Query took %0.2f seconds" % (t1-t0))
+print("Query took %0.2f seconds" % (time.time()-t0))
