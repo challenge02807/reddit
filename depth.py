@@ -23,12 +23,10 @@ def searcher(subreddits):
 		
         c.execute(""" WITH deep (id,depth) AS 
 					(
-						-- INITIALIZATION  
 						values (?,0)
 		
 						UNION ALL
 		
-						-- RECURSIION STEP
 						SELECT comments.id, deep.depth+1
 						FROM comments JOIN deep on comments.parent_id = deep.id
 					)
