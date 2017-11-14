@@ -21,7 +21,7 @@ def searcher(subreddits):
     #find the comment depth using recursive function in sql
     for com in c.fetchall():
 		
-        c.execute(""" WITH deepness (id,depth) AS 
+        c.execute(""" WITH deep (id,depth) AS 
 					(
 						-- INITIALIZATION  
 						values (?,0)
@@ -29,10 +29,10 @@ def searcher(subreddits):
 						UNION ALL
 		
 						-- RECURSIION STEP
-						SELECT comments.id, deepness.depth+1
-						FROM comments JOIN deepness on comments.parent_id = deepness.id
+						SELECT comments.id, deep.depth+1
+						FROM comments JOIN deep on comments.parent_id = deep.id
 					)
-					Select max(depth) from deepness
+					Select max(depth) from deep
                """, [com[0]])
 
         #each thread and toplevel comments
