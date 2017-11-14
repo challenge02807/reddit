@@ -1,0 +1,11 @@
+(280.66666666666669, ('t5_2zlk4',)) EroticRolePlay
+(262.91666666666669, ('t5_2u9jq',)) counting
+(164.38775510204081, ('t5_33wg4',)) SburbRP
+(149.5, ('t5_366p4',)) TheTwoCenturions
+(95.0, ('t5_3272o',)) RidersOfBerk
+(75.0, ('t5_332yz',)) survivorrankdown2
+(74.0, ('t5_2zjgs',)) roleplayponies
+(70.0, ('t5_359bv',)) DigitalMonsterRP
+(67.958333333333329, ('t5_2x15g',)) ExploreFiction
+(63.799999999999997, ('t5_32b0g',)) PrivateFiction
+Query took: 3543.08334804
